@@ -4,13 +4,14 @@ import Aside from "../../components/aside/Aside";
 import Header from "../../components/header/Header";
 import { Button } from "@mui/material";
 import axios from "axios";
+import CryptoJS from "crypto-js";
 import { MD5 } from "crypto-js";
 
 function Add({ myself }) {
   const [isbnData, setisbnData] = useState("");
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
 
-  function handleClick(params) {
+  function handleClick() {
     PostBook(isbnData);
   }
 

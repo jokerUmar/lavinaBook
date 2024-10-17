@@ -6,22 +6,19 @@
   position: relative;
 }
 
-.aside ul {
-  padding: 0;
-}
-
 #asideBox {
   padding: 38px 66px 0px 66px;
   text-align: center;
   min-height: 100vh;
   background-color: white !important;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.285);
 }
 
-.aside ul {
+#asideBox ul {
   padding: 0;
   margin: 0;
   list-style: none;
-  margin-top: 100px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,8 +51,26 @@
   padding: 10px 15px;
   background-color: white;
   border-radius: 10px;
-  display: none;
-  background-color: red;
+}
+
+.card {
+  margin-top: 20px;
+}
+
+.aside {
+  position: absolute;
+  z-index: 99;
+  left: -150%;
+  transition: 0.3s;
+  background-color: white !important;
+}
+
+.moveAside {
+  position: absolute;
+  z-index: 99;
+  left: 0%;
+  transition: 0.3s;
+  background-color: white !important;
 }
 
 @media screen and (max-width: 800px) {
@@ -69,23 +84,20 @@
 }
 
 @media screen and (max-width: 600px) {
-  .aside {
-    position: absolute;
-    z-index: 99;
-    left: 0%;
-    transition: 0.3s;
-    background-color: white !important;
+  #asideBox {
+    padding: 10px;
   }
 
-  .moveAside {
-    position: absolute;
-    z-index: 99;
-    left: -150%;
-    transition: 0.3s;
-    background-color: white !important;
+  #asideBox ul {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   #asideBox h3 {
     display: flex;
+    margin: 0 auto;
   }
 }

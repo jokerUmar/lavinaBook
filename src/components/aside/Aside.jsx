@@ -14,7 +14,7 @@ function Aside() {
 
   return (
     <aside className={side == true ? "moveAside" : "aside"} id="asideBox">
-      <img src={logo} alt="" />
+      <img src={logo} alt="" className="aside_logo" />
       <div className="list_aside">
         <ul>
           <Link to={"/home"} className={"aside_link"}>

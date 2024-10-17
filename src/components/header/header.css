@@ -42,7 +42,8 @@ header input {
 }
 
 .header_bars {
-  display: none;
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
 @media screen and (max-width: 600px) {
@@ -56,8 +57,7 @@ header input {
   }
 
   .header_bars {
-    display: flex;
+    margin-left: 20px;
     margin-right: 20px;
-    margin-left: 40px;
   }
 }

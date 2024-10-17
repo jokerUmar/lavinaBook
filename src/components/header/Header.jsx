@@ -8,8 +8,13 @@ import { SidebarContext } from "../../context/SidebarContext";
 function Header({ myself }) {
   let { side, setSide } = useContext(SidebarContext);
 
+  console.log(side);
+
   return (
     <header>
+      <div className="profile">
+        <div className="pro">{myself?.name}</div>
+      </div>
       <label htmlFor="search">
         <input type="text" placeholder="Search" />
         <Button
@@ -20,10 +25,6 @@ function Header({ myself }) {
           search
         </Button>
       </label>
-      <div className="profile">
-        <div className="pro">{myself?.name}</div>
-      </div>
-
       <img
         onClick={() => setSide(!side)}
         className="header_bars"
