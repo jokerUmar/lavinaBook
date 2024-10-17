@@ -1,0 +1,29 @@
+.bookpage .container {
+  display: flex;
+}
+.bookpage .box {
+  width: 100%;
+  background-color: #f3f3f7;
+}
+
+.book_main {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.book_img {
+  background-color: white;
+  padding: 24px 32px 104px 32px;
+}
+
+@media screen and (max-width: 800px) {
+  .book_info {
+    position: relative;
+    top: -180px;
+  }
+
+  .book_main {
+    flex-direction: column;
+  }
+}

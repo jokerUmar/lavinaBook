@@ -1,0 +1,91 @@
+.aside {
+  padding: 38px 66px 0px 66px;
+  text-align: center;
+  min-height: 100vh;
+  background-color: white !important;
+  position: relative;
+}
+
+.aside ul {
+  padding: 0;
+}
+
+#asideBox {
+  padding: 38px 66px 0px 66px;
+  text-align: center;
+  min-height: 100vh;
+  background-color: white !important;
+}
+
+.aside ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aside_link {
+  display: flex;
+  margin-bottom: 30px !important;
+  font-size: 20px !important;
+  color: #8a8a8a !important;
+  text-decoration: none !important;
+  width: 150px;
+}
+
+.aside_link p {
+  margin-left: 12px;
+}
+
+.aside_link img {
+  width: 25px;
+}
+
+.addimg {
+  margin-left: -20px;
+}
+
+#asideBox h3 {
+  text-align: center;
+  box-shadow: 0px 0px 4px 0px #00000040;
+  padding: 10px 15px;
+  background-color: white;
+  border-radius: 10px;
+  display: none;
+  background-color: red;
+}
+
+@media screen and (max-width: 800px) {
+  #asideBox {
+    padding: 40px;
+  }
+
+  .aside ul {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .aside {
+    position: absolute;
+    z-index: 99;
+    left: 0%;
+    transition: 0.3s;
+    background-color: white !important;
+  }
+
+  .moveAside {
+    position: absolute;
+    z-index: 99;
+    left: -150%;
+    transition: 0.3s;
+    background-color: white !important;
+  }
+
+  #asideBox h3 {
+    display: flex;
+  }
+}

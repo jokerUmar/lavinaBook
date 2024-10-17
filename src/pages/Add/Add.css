@@ -1,0 +1,49 @@
+.add .container {
+  display: flex;
+}
+.add .box {
+  width: 100%;
+  background-color: #f3f3f7;
+}
+
+.add_box {
+  background-color: white;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  padding: 28px 51px 47px 63px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  margin-left: 20px;
+  height: 300px;
+  margin-right: 10px;
+}
+
+.add_box input {
+  width: 90%;
+  margin-bottom: 30px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.add_main {
+  display: flex;
+  justify-content: space-around;
+}
+
+.add_main_img {
+  border: 1px solid;
+}
+
+@media screen and (max-width: 900px) {
+  .add_main {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .add_box {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+  }
+}

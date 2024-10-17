@@ -1,0 +1,50 @@
+.shelf .container {
+  display: flex;
+}
+.shelf .box {
+  width: 100%;
+  background-color: #f3f3f7;
+}
+
+.shelf .book_main {
+  text-align: left;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.shelf h1 {
+  text-align: center;
+}
+
+.book_card {
+  background-color: white;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  border-radius: 10px;
+  display: flex;
+}
+
+.book_card img {
+  width: 123px;
+}
+
+.book_card-title,
+.book_card-author,
+.book_card-rating {
+  margin: 0;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.book_card-title {
+  font-size: 15px;
+  width: 123px;
+  text-align: center;
+}
+
+.book_card-right {
+  text-align: center;
+  margin-left: 10px;
+}

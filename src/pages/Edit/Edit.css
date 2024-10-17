@@ -1,0 +1,7 @@
+.edit .container {
+  display: flex;
+}
+.edit .box {
+  width: 100%;
+  background-color: #f3f3f7;
+}
