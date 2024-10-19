@@ -17,6 +17,7 @@
   margin-left: 40px;
   border-radius: 10px;
   background-color: white;
+  max-height: 250px;
 }
 
 .card img {
@@ -35,4 +36,5 @@
 .main {
   display: flex;
   flex-wrap: wrap;
+  min-height: 101vh;
 }

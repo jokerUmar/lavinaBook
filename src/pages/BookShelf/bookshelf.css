@@ -3,7 +3,11 @@
 }
 .shelf .box {
   width: 100%;
+}
+
+.shelf {
   background-color: #f3f3f7;
+  height: 100vh;
 }
 
 .shelf .book_main {

@@ -1,9 +1,9 @@
 import React from "react";
-import Header from "../../components/header/Header";
 import Aside from "../../components/aside/Aside";
 import "./Bookpage.css";
 import logo from "../../assets/Logo 1.svg";
 import { Button } from "@mui/material";
+import DrawerAppBar from "../../components/header/Header";
 
 function BookPage({ myself }) {
   return (
@@ -11,7 +11,7 @@ function BookPage({ myself }) {
       <div className="container">
         <Aside />
         <div className="box">
-          <Header myself={myself} />
+          <DrawerAppBar myself={myself} />
 
           <div className="book_main">
             <div className="book_img">

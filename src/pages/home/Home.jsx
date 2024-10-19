@@ -3,11 +3,11 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { MD5 } from "crypto-js";
 import Aside from "../../components/aside/Aside";
-import Header from "../../components/header/Header";
 import img from "../../assets/Logo 1.svg";
 import { BooleanContext } from "../../context/booleanContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import DrawerAppBar from "../../components/header/Header";
 
 function Home({ myself }) {
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
@@ -32,102 +32,6 @@ function Home({ myself }) {
         },
         status: 0,
       },
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
     ],
     isOk: true,
     message: "ok",
@@ -136,10 +40,8 @@ function Home({ myself }) {
   return (
     <div className="home">
       <div className="container">
-        <Aside />
         <div className="right">
-          <Header myself={myself} />
-
+          <DrawerAppBar myself={myself} />
           <div className="main">
             {x.data.length < 0 ? (
               <h1>EMPTY</h1>

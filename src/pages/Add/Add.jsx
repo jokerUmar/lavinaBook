@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import "./Add.css";
-import Aside from "../../components/aside/Aside";
-import Header from "../../components/header/Header";
 import { Button } from "@mui/material";
 import axios from "axios";
-import CryptoJS from "crypto-js";
 import { MD5 } from "crypto-js";
-
+import md5 from "md5";
+import DrawerAppBar from "../../components/header/Header";
 function Add({ myself }) {
   const [isbnData, setisbnData] = useState("");
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
@@ -19,24 +17,20 @@ function Add({ myself }) {
     return MD5(string).toString();
   };
 
-  function PostBook(dataIsbn) {
+  const PostBook = async (dataIsbn) => {
     const body = {
       isbn: dataIsbn,
     };
 
-    let method = "POST";
-    let url = "/books";
-
-    let str = `${method}${url}${JSON.stringify(body)}${secret}`;
+    let str = `POST/books{isbn:"${dataIsbn}"}${secret}`;
 
     let sign = hashGenerator(str);
-
-    console.log(sign);
 
     const config = {
       headers: {
         Key: key,
         Sign: sign,
+        "Content-Type": "application/json",
       },
     };
 
@@ -48,14 +42,12 @@ function Add({ myself }) {
       .catch((err) => {
         console.log(err);
       });
-  }
-
+  };
   return (
     <div className="add">
       <div className="container">
-        <Aside />
         <div className="box">
-          <Header myself={myself} />
+          <DrawerAppBar myself={myself} />
 
           <div className="add_main">
             <div className="add_box">

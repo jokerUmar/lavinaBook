@@ -1,17 +1,16 @@
 import React from "react";
 import "./bookshelf.css";
 import { Button } from "@mui/material";
-import Header from "../../components/header/Header";
 import Aside from "../../components/aside/Aside";
 import img from "../../assets/book.png";
+import DrawerAppBar from "../../components/header/Header";
 
 function Bookshelf({ myself }) {
   return (
     <div className="shelf">
       <div className="container">
-        <Aside />
         <div className="box">
-          <Header myself={myself} />
+          <DrawerAppBar myself={myself} />
 
           <h1>my shelf</h1>
           <div className="book_main">
