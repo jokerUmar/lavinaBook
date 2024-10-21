@@ -5,6 +5,8 @@ import axios from "axios";
 import { MD5 } from "crypto-js";
 import md5 from "md5";
 import DrawerAppBar from "../../components/header/Header";
+import CryptoJS from "crypto-js";
+
 function Add({ myself }) {
   const [isbnData, setisbnData] = useState("");
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
@@ -22,7 +24,8 @@ function Add({ myself }) {
       isbn: dataIsbn,
     };
 
-    let str = `POST/books{isbn:"${dataIsbn}"}${secret}`;
+    // let str = `POST/books{isbn:"${dataIsbn}"}${secret}`;
+    const str = `${"POST"}${"/books"}${JSON.stringify(body)}${secret}`;
 
     let sign = hashGenerator(str);
 
@@ -30,7 +33,6 @@ function Add({ myself }) {
       headers: {
         Key: key,
         Sign: sign,
-        "Content-Type": "application/json",
       },
     };
 
@@ -43,6 +45,43 @@ function Add({ myself }) {
         console.log(err);
       });
   };
+
+  // const PostBook = async (isbn) => {
+  //   console.log(isbn);
+
+  //   const method = "POST";
+  //   const url = "/books";
+  //   const body = { isbn };
+
+  //   // Prepare the string to sign
+  //   // const stringToSign = `${method}${url}${JSON.stringify(body)}${secret}`;
+  //   let stringToSign = `POST/books{isbn:"${isbn}"}${secret}`;
+
+  //   console.log(stringToSign);
+
+  //   // Generate the MD5 hash (sign)
+  //   const sign = MD5(stringToSign).toString();
+
+  //   // Set up headers
+  //   const headers = {
+  //     Key: key,
+  //     Sign: sign,
+  //   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       "https://no23.lavina.tech/books",
+  //       body,
+  //       {
+  //         headers,
+  //       }
+  //     );
+  //     console.log("Book created successfully:", response.data);
+  //   } catch (error) {
+  //     console.error("Error creating book:", error);
+  //   }
+  // };
+
   return (
     <div className="add">
       <div className="container">
