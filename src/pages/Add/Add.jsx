@@ -4,8 +4,8 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import { MD5 } from "crypto-js";
 import md5 from "md5";
-import DrawerAppBar from "../../components/header/Header";
 import CryptoJS from "crypto-js";
+import DrawerAppBar from "../../components/header/Header";
 
 function Add({ myself }) {
   const [isbnData, setisbnData] = useState("");
@@ -24,8 +24,8 @@ function Add({ myself }) {
       isbn: dataIsbn,
     };
 
-    // let str = `POST/books{isbn:"${dataIsbn}"}${secret}`;
-    const str = `${"POST"}${"/books"}${JSON.stringify(body)}${secret}`;
+    let str = `POST/books{isbn:"${dataIsbn}"}${secret}`;
+    // const str = `${"POST"}${"/books"}${JSON.stringify(body)}${secret}`;
 
     let sign = hashGenerator(str);
 

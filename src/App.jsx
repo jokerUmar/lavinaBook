@@ -12,20 +12,19 @@ import Add from "./pages/Add/Add";
 import Edit from "./pages/Edit/Edit";
 
 function App() {
-  let { key, secret } = JSON.parse(localStorage.getItem("user"));
   let { bool, setBool } = useContext(BooleanContext);
-
   const [myself, setMyself] = useState("");
+
   const hashGenerator = (string) => {
     return MD5(string).toString();
   };
 
   useEffect(() => {
-    getMyself();
-    getAllBook();
+    let { key, secret } = JSON.parse(localStorage.getItem("user"));
+    getMyself(key, secret);
   }, [bool]);
 
-  function getMyself() {
+  function getMyself(key, secret) {
     let str = "GET" + "/myself" + secret;
 
     let sign1 = hashGenerator(str);
