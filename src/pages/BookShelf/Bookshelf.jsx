@@ -10,7 +10,7 @@ function Bookshelf({ myself }) {
     <div className="shelf">
       <div className="container">
         <div className="box">
-          <DrawerAppBar myself={myself} />
+          <DrawerAppBar />
 
           <h1>my shelf</h1>
           <div className="book_main">

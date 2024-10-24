@@ -11,7 +11,7 @@ function BookPage({ myself }) {
       <div className="container">
         <Aside />
         <div className="box">
-          <DrawerAppBar myself={myself} />
+          <DrawerAppBar />
 
           <div className="book_main">
             <div className="book_img">

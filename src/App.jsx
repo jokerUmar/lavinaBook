@@ -19,56 +19,32 @@ function App() {
     return MD5(string).toString();
   };
 
-  useEffect(() => {
-    let { key, secret } = JSON.parse(localStorage.getItem("user"));
-    getMyself(key, secret);
-  }, [bool]);
+  // function getAllBook() {
+  //   let str = "GET" + "/books" + secret;
+  //   let sign2 = hashGenerator(str);
 
-  function getMyself(key, secret) {
-    let str = "GET" + "/myself" + secret;
-
-    let sign1 = hashGenerator(str);
-
-    axios
-      .get(`https://no23.lavina.tech/myself`, {
-        headers: {
-          Accept: "application/json",
-          Key: key,
-          Sign: sign1,
-        },
-      })
-      .then((res) => {
-        setMyself(res?.data?.data);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function getAllBook() {
-    let str = "GET" + "/books" + secret;
-    let sign2 = hashGenerator(str);
-
-    axios
-      .get(`https://no23.lavina.tech/books`, {
-        headers: {
-          Key: key,
-          Sign: sign2,
-        },
-      })
-      .then((res) => {
-        // console.log(res);
-      })
-      .catch((err) => console.log(err));
-  }
+  //   axios
+  //     .get(`https://no23.lavina.tech/books`, {
+  //       headers: {
+  //         Key: key,
+  //         Sign: sign2,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       // console.log(res);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   return (
     <>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home myself={myself} />} />
-        <Route path="/book" element={<BookPage myself={myself} />} />
-        <Route path="/shelf" element={<Bookshelf myself={myself} />} />
-        <Route path="/add" element={<Add myself={myself} />} />
-        <Route path="/edit" element={<Edit myself={myself} />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/book" element={<BookPage />} />
+        <Route path="/shelf" element={<Bookshelf />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/edit" element={<Edit />} />
       </Routes>
     </>
   );

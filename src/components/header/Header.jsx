@@ -7,13 +7,8 @@ import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
@@ -24,6 +19,12 @@ import home from "../../assets/home.svg";
 import shelf from "../../assets/Bookshelf.svg";
 import addImg from "../../assets/add.svg";
 import dift from "../../assets/Give Gift.svg";
+import { useContext } from "react";
+import { SearchContext } from "../../context/SearchContext";
+import axios from "axios";
+import { MD5 } from "crypto-js";
+import { useState } from "react";
+import { Alert, Snackbar } from "@mui/material";
 
 const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
@@ -71,12 +72,60 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function DrawerAppBar(props) {
-  const { window, myself } = props;
+  const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  let { key, secret } = JSON.parse(localStorage.getItem("user"));
+  let { search, setSearch } = useContext(SearchContext);
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  function handleChange(e) {
+    if (e.key == "Enter" && e.target.value.length > 0) {
+      getBookSearch(e.target.value);
+    }
+  }
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const hashGenerator = (string) => {
+    return MD5(string).toString();
+  };
+
+  function getBookSearch(search) {
+    let str = "GET/books/" + search + secret;
+    let sign = hashGenerator(str);
+
+    const config = {
+      headers: {
+        Key: key,
+        Sign: sign,
+      },
+    };
+
+    axios
+      .get(`https://no23.lavina.tech/books/${search}`, config)
+      .then((res) => {
+        setSearch(res);
+      })
+      .catch((err) => {
+        setText("something went wrong please try again");
+        handleClick();
+      });
+  }
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -122,7 +171,10 @@ function DrawerAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Search style={{ marginLeft: "auto" }}>
+          <Search
+            onKeyUp={(e) => handleChange(e)}
+            style={{ marginLeft: "auto" }}
+          >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -131,9 +183,6 @@ function DrawerAppBar(props) {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <div className="profile">
-            <div className="pro">{myself?.name}</div>
-          </div>
         </Toolbar>
       </AppBar>
       <nav>
@@ -156,6 +205,16 @@ function DrawerAppBar(props) {
           {drawer}
         </Drawer>
       </nav>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          variant="filled"
+          sx={{ width: "250px" }}
+        >
+          {text}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

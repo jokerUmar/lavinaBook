@@ -17,8 +17,9 @@ function Login() {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
 
-  let key = "MyUserKey" + Math.floor(Math.random() * 10000).toString();
-  let mySecret = "MyUserSecret" + Math.floor(Math.random() * 10000).toString();
+  let key = "MyUserKey" + Math.floor(Math.random() * 1000000).toString();
+  let mySecret =
+    "MyUserSecret" + Math.floor(Math.random() * 1000000).toString();
 
   function postData() {
     if (!email.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
@@ -29,9 +30,8 @@ function Login() {
         .post(`https://no23.lavina.tech/signup`, {
           name: name,
           email: email,
-          key: name.length > 0 && email.length > 0 ? key + name.trim() : "",
-          secret:
-            name.length > 0 && email.length > 0 ? mySecret + email.trim() : "",
+          key: name.length > 0 && email.length > 0 ? key : "",
+          secret: name.length > 0 && email.length > 0 ? mySecret : "",
         })
         .then((res) => {
           console.log(res);

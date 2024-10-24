@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import DrawerAppBar from "../../components/header/Header";
 
-function Home({ myself }) {
+function Home() {
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
   let { bool, setBool } = useContext(BooleanContext);
   let navigate = useNavigate();
@@ -41,7 +41,7 @@ function Home({ myself }) {
     <div className="home">
       <div className="container">
         <div className="right">
-          <DrawerAppBar myself={myself} />
+          <DrawerAppBar />
           <div className="main">
             {x.data.length < 0 ? (
               <h1>EMPTY</h1>
