@@ -1,41 +1,29 @@
 import "./home.css";
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { MD5 } from "crypto-js";
-import Aside from "../../components/aside/Aside";
-import img from "../../assets/Logo 1.svg";
 import { BooleanContext } from "../../context/booleanContext";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { SearchContext } from "../../context/SearchContext";
 import DrawerAppBar from "../../components/header/Header";
+import LazyLoad from "react-lazy-load";
+import axios from "axios";
+import { MD5 } from "crypto-js";
+import { Button } from "@mui/material";
+import { AddingShelfContext } from "../../context/AddingShelfContext";
 
 function Home() {
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
   let { bool, setBool } = useContext(BooleanContext);
+  let { search, setSearch } = useContext(SearchContext);
+  let { adding, setAdding } = useContext(AddingShelfContext);
+
+  const [loader, setLoader] = useState("LazyLoad");
   let navigate = useNavigate();
 
   function handleCard() {
     navigate("/book");
   }
 
-  let x = {
-    data: [
-      {
-        book: {
-          id: 21,
-          isbn: "9781118464465",
-          title: "Raspberry Pi User Guide",
-          cover: "http://url.to.book.cover",
-          author: "Eben Upton",
-          published: 2012,
-          pages: 221,
-        },
-        status: 0,
-      },
-    ],
-    isOk: true,
-    message: "ok",
-  };
+  function handleAdd(e) {}
 
   return (
     <div className="home">
@@ -43,31 +31,63 @@ function Home() {
         <div className="right">
           <DrawerAppBar />
           <div className="main">
-            {x.data.length < 0 ? (
-              <h1>EMPTY</h1>
+            {typeof search?.data?.data == "undefined" ? (
+              <h1
+                style={{
+                  color: "#1976D2",
+                  textAlign: "center",
+                  margin: "20px auto",
+                }}
+              >
+                EMPTY
+              </h1>
             ) : (
-              x.data.map((e) => {
+              search?.data?.data?.map((e) => {
                 return (
-                  <div className="card" onClick={handleCard}>
-                    <img src={img} width={"125px"} alt="" />
-                    {e?.book?.title ? (
-                      <p className="card_name">{e.book.title}</p>
-                    ) : (
-                      <p className="card_name">no title</p>
-                    )}
-                    {e?.book?.author ? (
-                      <p className="card_name">
-                        {e.book.author} {e.book.published}
-                      </p>
-                    ) : (
-                      <p className="card_name">no author</p>
-                    )}
-
-                    {e?.book?.pages ? (
-                      <p className="card_name"> pages {e.book.pages}</p>
-                    ) : (
-                      <p className="card_name">no pages</p>
-                    )}
+                  <div className="card" key={e.isbn}>
+                    <LazyLoad
+                      height={"150px"}
+                      offset={300}
+                      threshold={0.95}
+                      onContentVisible={() => {
+                        setLoader("is-visible");
+                      }}
+                    >
+                      <img
+                        src={
+                          e.cover.toString().split("/")[
+                            e.cover.toString().split("/").length - 1
+                          ] !== "-1-M.jpg"
+                            ? e?.cover
+                            : "https://picsum.photos/200/300"
+                        }
+                        width={"180px"}
+                        height={"180px"}
+                        alt=""
+                      />
+                    </LazyLoad>
+                    <div className="card_name_box">
+                      {e?.title ? (
+                        <p className="card_name card_title">{e?.title}</p>
+                      ) : (
+                        <p className="card_name">no title</p>
+                      )}
+                      {e?.author ? (
+                        <p className="card_name">
+                          {e.author} {e.published}
+                        </p>
+                      ) : (
+                        <p className="card_name">no author</p>
+                      )}
+                    </div>
+                    <Button
+                      className="add_btn"
+                      variant="contained"
+                      color="success"
+                      onClick={() => handleAdd(e)}
+                    >
+                      Add to List
+                    </Button>
                   </div>
                 );
               })

@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import BooleanProvider from "./context/booleanContext.jsx";
 import SidebarProvider from "./context/SidebarContext.jsx";
 import SearchProvider from "./context/SearchContext.jsx";
+import AddingShelfProvider from "./context/AddingShelfContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -12,7 +13,9 @@ createRoot(document.getElementById("root")).render(
       <BooleanProvider>
         <SidebarProvider>
           <SearchProvider>
-            <App />
+            <AddingShelfProvider>
+              <App />
+            </AddingShelfProvider>
           </SearchProvider>
         </SidebarProvider>
       </BooleanProvider>

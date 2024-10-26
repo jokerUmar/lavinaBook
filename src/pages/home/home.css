@@ -10,22 +10,32 @@
 }
 
 .card {
-  width: 160px;
+  width: 200px;
   padding: 16px 27px 13px 15px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.29);
   margin-top: 20px;
   margin-left: 40px;
   border-radius: 10px;
   background-color: white;
-  max-height: 250px;
+  min-height: 350px;
 }
 
 .card img {
-  margin-bottom: 12px;
+  margin: 0 auto;
+  margin-left: -5px;
 }
 
 .card_name {
-  font-size: 12px;
+  font-size: 18px;
+}
+
+.card_title {
+  height: 50px;
+  overflow: hidden;
+}
+
+.card_name_box {
+  margin-top: 60px;
 }
 
 .card_author,
@@ -37,4 +47,62 @@
   display: flex;
   flex-wrap: wrap;
   min-height: 101vh;
+}
+
+.LazyLoad {
+  background-image: url("../../assets/spinner.gif");
+  background-position: top;
+  opacity: 0;
+}
+
+.is-visible {
+  opacity: 1;
+}
+
+.add_btn {
+  margin-left: 25px !important;
+}
+
+@media screen and (max-width: 1200px) {
+  .main {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .main {
+    max-width: 850px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: left;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .main {
+    max-width: 650px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: left;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: left;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    justify-content: space-around;
+    padding: 10px;
+  }
+  .card {
+    margin-left: 0;
+    margin-right: 10px;
+  }
 }

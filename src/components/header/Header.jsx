@@ -13,7 +13,7 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import "./Header.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo 1.svg";
 import home from "../../assets/home.svg";
 import shelf from "../../assets/Bookshelf.svg";
@@ -79,13 +79,27 @@ function DrawerAppBar(props) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
 
+  let location = useLocation();
+  const { hash, pathname } = location;
+  let navigate = useNavigate();
+
+  // functions
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
   function handleChange(e) {
-    if (e.key == "Enter" && e.target.value.length > 0) {
-      getBookSearch(e.target.value);
+    if (e.key == "Enter") {
+      if (pathname !== "/home") {
+        navigate("/home");
+      }
+
+      // using api
+
+      if (e.target.value.length > 0) {
+        getBookSearch(e.target.value);
+      }
     }
   }
 
@@ -101,12 +115,12 @@ function DrawerAppBar(props) {
     setOpen(false);
   };
 
-  const hashGenerator = (string) => {
-    return MD5(string).toString();
-  };
-
   function getBookSearch(search) {
-    let str = "GET/books/" + search + secret;
+    function hashGenerator(string) {
+      return MD5(string).toString();
+    }
+
+    let str = `GET/books/` + search + secret;
     let sign = hashGenerator(str);
 
     const config = {
@@ -120,8 +134,11 @@ function DrawerAppBar(props) {
       .get(`https://no23.lavina.tech/books/${search}`, config)
       .then((res) => {
         setSearch(res);
+        console.log(res);
       })
       .catch((err) => {
+        console.log(err);
+        setSearch([]);
         setText("something went wrong please try again");
         handleClick();
       });
