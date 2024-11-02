@@ -4,8 +4,10 @@ import { Button } from "@mui/material";
 import Aside from "../../components/aside/Aside";
 import img from "../../assets/book.png";
 import DrawerAppBar from "../../components/header/Header";
+import { AddingShelfContext } from "../../context/AddingShelfContext";
+import DialogSelect from "../../components/status/Status";
 
-function Bookshelf({ myself }) {
+function Bookshelf() {
   return (
     <div className="shelf">
       <div className="container">
@@ -26,9 +28,7 @@ function Bookshelf({ myself }) {
                 </Button>
                 <br />
                 <br />
-                <Button variant="contained" color="success">
-                  succes
-                </Button>
+                <DialogSelect />
               </div>
             </div>
           </div>

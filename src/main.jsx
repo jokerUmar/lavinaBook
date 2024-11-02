@@ -6,19 +6,22 @@ import BooleanProvider from "./context/booleanContext.jsx";
 import SidebarProvider from "./context/SidebarContext.jsx";
 import SearchProvider from "./context/SearchContext.jsx";
 import AddingShelfProvider from "./context/AddingShelfContext.jsx";
+import { MantineProvider } from "@mantine/core";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <BooleanProvider>
-        <SidebarProvider>
-          <SearchProvider>
-            <AddingShelfProvider>
-              <App />
-            </AddingShelfProvider>
-          </SearchProvider>
-        </SidebarProvider>
-      </BooleanProvider>
-    </BrowserRouter>
+    <MantineProvider>
+      <BrowserRouter>
+        <BooleanProvider>
+          <SidebarProvider>
+            <SearchProvider>
+              <AddingShelfProvider>
+                <App />
+              </AddingShelfProvider>
+            </SearchProvider>
+          </SidebarProvider>
+        </BooleanProvider>
+      </BrowserRouter>
+    </MantineProvider>
   </StrictMode>
 );

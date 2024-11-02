@@ -23,7 +23,36 @@ function Home() {
     navigate("/book");
   }
 
-  function handleAdd(e) {}
+  function handleAdd(item) {
+    // starting
+
+    function hashGenerator(string) {
+      return MD5(string).toString();
+    }
+
+    const bodyString = `{isbn:"${item.isbn}"}`;
+
+    let str = `POST/books${bodyString}${secret}`;
+    let sign = hashGenerator(str);
+
+    const config = {
+      headers: {
+        Key: key,
+        Sign: sign,
+      },
+    };
+
+    const body = { isbn: item.isbn };
+
+    axios
+      .post(`https://no23.lavina.tech/books`, body, config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <div className="home">

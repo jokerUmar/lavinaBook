@@ -10,7 +10,7 @@ import { BooleanContext } from "./context/booleanContext";
 import Bookshelf from "./pages/BookShelf/Bookshelf";
 import Add from "./pages/Add/Add";
 import Edit from "./pages/Edit/Edit";
-
+import { AuthenticationForm } from "./pages/auth/Auth";
 function App() {
   let { bool, setBool } = useContext(BooleanContext);
   const [myself, setMyself] = useState("");
@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<AuthenticationForm />} />
         <Route path="/home" element={<Home />} />
         <Route path="/book" element={<BookPage />} />
         <Route path="/shelf" element={<Bookshelf />} />
