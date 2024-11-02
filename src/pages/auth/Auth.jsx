@@ -13,7 +13,7 @@ import {
   Stack,
 } from "@mantine/core";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { MD5 } from "crypto-js";
@@ -21,6 +21,7 @@ import { MD5 } from "crypto-js";
 export function AuthenticationForm(props) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
+  const [myself, setMyself] = useState("");
   let navigate = useNavigate();
 
   const handleClose = (event, reason) => {
@@ -30,7 +31,7 @@ export function AuthenticationForm(props) {
     setOpen(false);
   };
 
-  function postData() {
+  function postSign() {
     axios
       .post(`https://no23.lavina.tech/signup`, {
         name: form.values.name,
@@ -39,8 +40,6 @@ export function AuthenticationForm(props) {
         secret: form.values.secret,
       })
       .then((res) => {
-        console.log(res);
-
         localStorage.setItem("user", JSON.stringify(res?.data?.data));
 
         setTimeout(() => {
@@ -50,15 +49,20 @@ export function AuthenticationForm(props) {
       .catch((err) => {
         if (err) {
           console.log(err);
+
+          setOpen(true);
+          setText(err.message);
         }
       });
   }
 
-  function getMyself() {
+  function getMyself(key, secret) {
     let x = localStorage.getItem("user");
 
+    console.log(typeof x);
+
     if (x !== null) {
-      let { key, secret } = JSON.parse(localStorage.getItem("user"));
+      //   let { key, secret } = JSON.parse(localStorage.getItem("user"));
 
       function hashGenerator(string) {
         return MD5(string).toString();
@@ -78,37 +82,32 @@ export function AuthenticationForm(props) {
       axios
         .get("https://no23.lavina.tech/myself", config)
         .then((res) => {
-          return res;
+          setMyself(res?.data?.data);
         })
         .catch((err) => {
-          return err;
+          setOpen(true);
+          setText(err.message);
+          setMyself(err);
+          console.log(err);
         });
     } else {
-      return false;
+      setMyself(false);
     }
   }
 
   //   myself localstorageni tekshiradi va ichida malumot bolsa qaytaradi bolnasa false
   function checkLogin() {
-    let myself = getMyself();
-    console.log(myself);
-
     if (type == "register") {
-      if (myself == false) {
-        postData();
+      getMyself(form.values.key, form.values.secret);
+      if (myself === false) {
+        postSign();
       } else {
-        let { key, secret, email } = JSON.parse(localStorage.getItem("user"));
-
-        console.log(key, form.values.key);
-        console.log(secret, form.values.secret);
-        console.log(email, form.values.email);
-
         if (
-          key !== form.values.key &&
-          secret !== form.values.secret &&
-          email !== form.values.email
+          myself.key !== form.values.key &&
+          myself.secret !== form.values.secret &&
+          myself.email !== form.values.email
         ) {
-          postData();
+          postSign();
         } else {
           form.values.name = "";
           form.values.key = "";
@@ -118,9 +117,50 @@ export function AuthenticationForm(props) {
           setText("this account already exists");
         }
       }
-
-      console.log(myself);
     } else if (type == "login") {
+      let x = localStorage.getItem("user");
+
+      if (x !== null) {
+        let { key, secret } = JSON.parse(localStorage.getItem("user"));
+
+        function hashGenerator(string) {
+          return MD5(string).toString();
+        }
+
+        let str = `GET/myself${secret}`;
+
+        let sign = hashGenerator(str);
+
+        const config = {
+          headers: {
+            Key: key,
+            Sign: sign,
+          },
+        };
+
+        axios
+          .get("https://no23.lavina.tech/myself", config)
+          .then((res) => {
+            let data = res?.data?.data;
+            if (
+              data.key === form.values.key &&
+              data.secret === form.values.secret &&
+              data.email === form.values.email
+            ) {
+              navigate("/home");
+            } else {
+              setOpen(true);
+              setText("The login or password was entered incorrectly");
+            }
+          })
+          .catch((err) => {
+            setOpen(true);
+            setText(err.message);
+          });
+      } else {
+        setOpen(true);
+        setText("this account is not exist");
+      }
     }
   }
 
