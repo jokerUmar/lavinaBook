@@ -15,10 +15,13 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { MD5 } from "crypto-js";
 
 export function AuthenticationForm(props) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
+  let navigate = useNavigate();
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -32,8 +35,8 @@ export function AuthenticationForm(props) {
       .post(`https://no23.lavina.tech/signup`, {
         name: form.values.name,
         email: form.values.email,
-        key: key,
-        secret: mySecret,
+        key: form.values.key,
+        secret: form.values.secret,
       })
       .then((res) => {
         console.log(res);
@@ -85,18 +88,35 @@ export function AuthenticationForm(props) {
     }
   }
 
+  //   myself localstorageni tekshiradi va ichida malumot bolsa qaytaradi bolnasa false
   function checkLogin() {
     let myself = getMyself();
+    console.log(myself);
+
     if (type == "register") {
-      if (myself !== false) {
+      if (myself == false) {
         postData();
       } else {
-        form.values.name = "";
-        form.values.key = "";
-        form.values.secret = "";
-        form.values.email = "";
-        setOpen(true);
-        setText("this account already exists");
+        let { key, secret, email } = JSON.parse(localStorage.getItem("user"));
+
+        console.log(key, form.values.key);
+        console.log(secret, form.values.secret);
+        console.log(email, form.values.email);
+
+        if (
+          key !== form.values.key &&
+          secret !== form.values.secret &&
+          email !== form.values.email
+        ) {
+          postData();
+        } else {
+          form.values.name = "";
+          form.values.key = "";
+          form.values.secret = "";
+          form.values.email = "";
+          setOpen(true);
+          setText("this account already exists");
+        }
       }
 
       console.log(myself);
