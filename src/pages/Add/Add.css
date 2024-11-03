@@ -1,5 +1,6 @@
 .add .container {
   display: flex;
+  padding: 20px;
 }
 .add {
   height: 100vh;
