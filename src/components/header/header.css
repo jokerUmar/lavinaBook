@@ -41,6 +41,14 @@
   margin-top: 20px;
 }
 
+.logout_btn {
+  display: none !important;
+}
+
+.logout_btn_header {
+  display: block !important;
+}
+
 @media screen and (max-width: 800px) {
   #asideBox {
     padding: 40px;
@@ -48,5 +56,15 @@
 
   .aside ul {
     margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .logout_btn {
+    display: block !important;
+  }
+
+  .logout_btn_header {
+    display: none !important;
   }
 }

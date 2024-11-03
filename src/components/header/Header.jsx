@@ -24,7 +24,8 @@ import { SearchContext } from "../../context/SearchContext";
 import axios from "axios";
 import { MD5 } from "crypto-js";
 import { useState } from "react";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
+import { AuthBoolContext } from "../../context/AuthBoolContext";
 
 const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
@@ -75,7 +76,10 @@ function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
+
   let { search, setSearch } = useContext(SearchContext);
+  let { setAuthbool } = useContext(AuthBoolContext);
+
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
 
@@ -84,6 +88,12 @@ function DrawerAppBar(props) {
   let navigate = useNavigate();
 
   // functions
+
+  function handleLogOut() {
+    localStorage.removeItem("user");
+    setAuthbool(false);
+    navigate("/");
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -167,6 +177,15 @@ function DrawerAppBar(props) {
           <img src={dift} alt="" />
           <p>Edit</p>
         </Link>
+        <Button
+          style={{ marginLeft: "30px", width: "100px !important" }}
+          onClick={handleLogOut}
+          variant="contained"
+          color="error"
+          className="logout_btn"
+        >
+          log out
+        </Button>
       </List>
     </Box>
   );
@@ -200,6 +219,16 @@ function DrawerAppBar(props) {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+
+          <Button
+            style={{ marginLeft: "30px", width: "100px !important" }}
+            onClick={handleLogOut}
+            variant="contained"
+            color="error"
+            className="logout_btn_header"
+          >
+            log out
+          </Button>
         </Toolbar>
       </AppBar>
       <nav>

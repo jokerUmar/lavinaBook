@@ -83,6 +83,7 @@ function Home() {
                       }}
                     >
                       <img
+                        loading="lazy"
                         src={
                           e.cover.toString().split("/")[
                             e.cover.toString().split("/").length - 1

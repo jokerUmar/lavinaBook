@@ -13,15 +13,19 @@ import {
   Stack,
 } from "@mantine/core";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { MD5 } from "crypto-js";
+import { AuthBoolContext } from "../../context/AuthBoolContext";
 
 export function AuthenticationForm(props) {
+  let { authbool, setAuthbool } = useContext(AuthBoolContext);
+
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const [myself, setMyself] = useState("");
+
   let navigate = useNavigate();
 
   const handleClose = (event, reason) => {
@@ -43,13 +47,14 @@ export function AuthenticationForm(props) {
         localStorage.setItem("user", JSON.stringify(res?.data?.data));
 
         setTimeout(() => {
+          setAuthbool(true);
           navigate("/home");
         }, 700);
       })
       .catch((err) => {
         if (err) {
           console.log(err);
-
+          setAuthbool(false);
           setOpen(true);
           setText(err.message);
         }
@@ -58,8 +63,6 @@ export function AuthenticationForm(props) {
 
   function getMyself(key, secret) {
     let x = localStorage.getItem("user");
-
-    console.log(typeof x);
 
     if (x !== null) {
       //   let { key, secret } = JSON.parse(localStorage.getItem("user"));
@@ -113,6 +116,7 @@ export function AuthenticationForm(props) {
           form.values.key = "";
           form.values.secret = "";
           form.values.email = "";
+          setAuthbool(false);
           setOpen(true);
           setText("this account already exists");
         }
@@ -147,17 +151,21 @@ export function AuthenticationForm(props) {
               data.secret === form.values.secret &&
               data.email === form.values.email
             ) {
+              setAuthbool(true);
               navigate("/home");
             } else {
+              setAuthbool(false);
               setOpen(true);
               setText("The login or password was entered incorrectly");
             }
           })
           .catch((err) => {
+            setAuthbool(false);
             setOpen(true);
             setText(err.message);
           });
       } else {
+        setAuthbool(false);
         setOpen(true);
         setText("this account is not exist");
       }

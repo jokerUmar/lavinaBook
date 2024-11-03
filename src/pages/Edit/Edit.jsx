@@ -1,6 +1,5 @@
 import React from "react";
 import "./Edit.css";
-import Aside from "../../components/aside/Aside";
 import DrawerAppBar from "../../components/header/Header";
 
 function Edit() {

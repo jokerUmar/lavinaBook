@@ -1,5 +1,4 @@
 import React from "react";
-import Aside from "../../components/aside/Aside";
 import "./Bookpage.css";
 import logo from "../../assets/Logo 1.svg";
 import { Button } from "@mui/material";
