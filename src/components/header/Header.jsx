@@ -165,10 +165,7 @@ function DrawerAppBar(props) {
           <img src={home} alt="" />
           <p>Home</p>
         </Link>
-        <Link to={"/add"} className="aside_link">
-          <img src={addImg} alt="" className="addimg" />
-          <p>Add New Book</p>
-        </Link>
+
         <Link to={"/shelf"} className="aside_link">
           <img src={shelf} alt="" />
           <p>My Shelf</p>

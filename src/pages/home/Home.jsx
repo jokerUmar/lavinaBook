@@ -30,7 +30,7 @@ function Home() {
       return MD5(string).toString();
     }
 
-    const bodyString = `{isbn:"${item.isbn}"}`;
+    const bodyString = `{"isbn":"${item.isbn}"}`;
 
     let str = `POST/books${bodyString}${secret}`;
     let sign = hashGenerator(str);

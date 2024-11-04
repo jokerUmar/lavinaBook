@@ -13,7 +13,6 @@ import Edit from "./pages/Edit/Edit";
 import { AuthenticationForm } from "./pages/auth/Auth";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import { AuthBoolContext } from "./context/AuthBoolContext";
-import { Navigate } from "react-router-dom";
 import PrivateRoutes from "./utils/PrivateRoutes";
 
 function App() {
@@ -22,38 +21,10 @@ function App() {
   const [myself, setMyself] = useState("");
   let navigate = useNavigate();
 
-  console.log(authbool);
-  const hashGenerator = (string) => {
-    return MD5(string).toString();
-  };
-
-  // function getAllBook() {
-  //   let str = "GET" + "/books" + secret;
-  //   let sign2 = hashGenerator(str);
-
-  //   axios
-  //     .get(`https://no23.lavina.tech/books`, {
-  //       headers: {
-  //         Key: key,
-  //         Sign: sign2,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       // console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
-
   return (
     <>
       <Routes>
         <Route path="/" element={<AuthenticationForm />} />
-        {/* <Route path="/home" element={<Home />} />
-        <Route path="/book" element={<BookPage />} />
-        <Route path="/shelf" element={<Bookshelf />} />
-        <Route path="/add" element={<Add />} />
-        <Route path="/edit" element={<Edit />} />
-        <Route path="*" element={<ErrorPage />} /> */}
 
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} />
