@@ -91,7 +91,7 @@ function DrawerAppBar(props) {
 
   function handleLogOut() {
     localStorage.removeItem("user");
-    setAuthbool(false);
+    localStorage.setItem("checker", false);
     navigate("/");
   }
 

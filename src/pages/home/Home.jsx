@@ -8,12 +8,9 @@ import LazyLoad from "react-lazy-load";
 import axios from "axios";
 import { MD5 } from "crypto-js";
 import { Button } from "@mui/material";
-import usePreventBackNavigation from "../../utils/disableRoute/DisableRoute";
 
 function Home() {
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
-
-  usePreventBackNavigation();
 
   let { search, setSearch } = useContext(SearchContext);
 

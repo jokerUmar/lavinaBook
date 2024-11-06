@@ -10,6 +10,7 @@ import Edit from "./pages/Edit/Edit";
 import { AuthenticationForm } from "./pages/auth/Auth";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import PrivateRoutes from "./utils/PrivateRoutes";
+import DisableLogin from "./utils/DisableLogin";
 
 function App() {
   let navigate = useNavigate();
@@ -17,7 +18,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<AuthenticationForm />} />
+        <Route element={<DisableLogin />}>
+          <Route path="/" element={<AuthenticationForm />} />
+        </Route>
 
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} exact />

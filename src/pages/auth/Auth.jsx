@@ -19,13 +19,10 @@ import { useNavigate } from "react-router-dom";
 import { MD5 } from "crypto-js";
 import { AuthBoolContext } from "../../context/AuthBoolContext";
 import AuthCheck from "../../zustand/Authcheker";
-import usePreventBackNavigation from "../../utils/disableRoute/DisableRoute";
 
 export function AuthenticationForm(props) {
   let { authbool, setAuthbool } = useContext(AuthBoolContext);
   let { check, changeTrue, changeFalse } = AuthCheck();
-
-  console.log(check);
 
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -53,12 +50,15 @@ export function AuthenticationForm(props) {
 
         setTimeout(() => {
           changeTrue();
-          navigate("/home", { replace: true });
+          localStorage.setItem("checker", true);
+
+          navigate("/home");
         }, 200);
       })
       .catch((err) => {
         if (err) {
           console.log(err);
+          localStorage.setItem("checker", false);
           changeFalse();
           setOpen(true);
           setText(err.message);
@@ -121,6 +121,7 @@ export function AuthenticationForm(props) {
           form.values.key = "";
           form.values.secret = "";
           form.values.email = "";
+          localStorage.setItem("checker", false);
 
           changeFalse();
           setOpen(true);
@@ -159,10 +160,13 @@ export function AuthenticationForm(props) {
             ) {
               // setAuthbool(true);
               changeTrue();
+              localStorage.setItem("checker", true);
+
               navigate("/home");
             } else {
               // setAuthbool(false);
               changeFalse();
+              localStorage.setItem("checker", false);
               setOpen(true);
               setText("The login or password was entered incorrectly");
             }
@@ -170,12 +174,14 @@ export function AuthenticationForm(props) {
           .catch((err) => {
             // setAuthbool(false);
             changeFalse();
+            localStorage.setItem("checker", false);
             setOpen(true);
             setText(err.message);
           });
       } else {
         // setAuthbool(false);
         changeFalse();
+        localStorage.setItem("checker", false);
         setOpen(true);
         setText("this account is not exist");
       }
