@@ -1,11 +1,9 @@
-import { createContext, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { createContext, useEffect, useMemo, useState } from "react";
 
 export const AuthBoolContext = createContext();
 
 export default function AuthBoolProvider({ children }) {
   const [authbool, setAuthbool] = useState(false);
-  const location = useLocation(); // Use location where it's actually needed
 
   const contextValue = useMemo(
     () => ({

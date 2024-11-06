@@ -10,14 +10,42 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { MD5 } from "crypto-js";
+import axios from "axios";
 
-export default function DialogSelect() {
+export default function DialogSelect({ id }) {
   const [open, setOpen] = React.useState(false);
-  const [age, setAge] = React.useState("");
+  const [status, setStatus] = React.useState("");
+
+  let { key, secret } = JSON.parse(localStorage.getItem("user"));
+  const hashGenerator = (string) => {
+    return MD5(string).toString();
+  };
 
   const handleChange = (event) => {
-    setAge(Number(event.target.value) || "");
+    setStatus(Number(event.target.value) || "");
   };
+
+  function EditBook() {
+    let body = {
+      status: status - 1,
+    };
+
+    let str = "PATCH" + "/books/" + id + JSON.stringify(body) + secret;
+    let sign2 = hashGenerator(str);
+
+    let config = {
+      headers: {
+        Key: key,
+        Sign: sign2,
+      },
+    };
+
+    axios
+      .patch(`https://no23.lavina.tech/books/${id}`, body, config)
+      .then((res) => {})
+      .catch((err) => console.log(err));
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,20 +71,26 @@ export default function DialogSelect() {
               <Select
                 labelId="demo-dialog-select-label"
                 id="demo-dialog-select"
-                value={age}
+                value={status}
                 onChange={handleChange}
                 input={<OutlinedInput label="Age" />}
               >
-                <MenuItem value={1}>One</MenuItem>
-                <MenuItem value={2}>Two</MenuItem>
-                <MenuItem value={3}>Three</MenuItem>
+                <MenuItem value={1}>0</MenuItem>
+                <MenuItem value={2}>1</MenuItem>
+                <MenuItem value={3}>2</MenuItem>
               </Select>
             </FormControl>
           </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Ok</Button>
+          <Button
+            onClick={() => {
+              handleClose(), EditBook();
+            }}
+          >
+            Ok
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

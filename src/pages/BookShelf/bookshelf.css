@@ -54,3 +54,41 @@
   text-align: center;
   margin-left: 10px;
 }
+
+.book_box {
+  width: 1100px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1100px) {
+  .book_box {
+    max-width: 760px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .book_box {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .book_card {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .book_box {
+    align-items: start;
+    justify-content: flex-start;
+  }
+
+  .book_card {
+    width: 320px;
+    margin-left: 0;
+  }
+}

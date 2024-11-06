@@ -16,6 +16,9 @@ function Bookshelf() {
 
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
 
+  // EDIT BOOK
+
+  //  FUNCTION DELETE BOOK
   function deleteBook(id) {
     let str = "DELETE" + "/books/" + id + secret;
     let sign2 = hashGenerator(str);
@@ -33,6 +36,7 @@ function Bookshelf() {
       .catch((err) => console.log(err));
   }
 
+  // FUNCTION GET ALL BOOK
   function getAllBook() {
     let str = "GET" + "/books" + secret;
     let sign2 = hashGenerator(str);
@@ -61,8 +65,6 @@ function Bookshelf() {
     getAllBook();
   }, [dataBook]);
 
-  console.log(dataBook);
-
   return (
     <div className="shelf">
       <div className="container">
@@ -71,45 +73,53 @@ function Bookshelf() {
 
           <h1>my shelf</h1>
           <div className="book_main">
-            {dataBook.length > 0 ? (
-              dataBook.map((el) => {
-                return (
-                  <div className="book_card" key={el?.book?.id}>
-                    <img
-                      src={el?.book?.cover ? el?.book?.cover : img}
-                      alt="there is img"
-                    />
-                    <div className="book_card-right">
-                      <p className="book_card-title">{el?.book?.title}</p>
-                      <p
-                        className="book_card-author"
-                        style={{ width: "180px" }}
-                      >
-                        {el?.book?.author}, {el?.book?.published}
-                      </p>
-                      <p className="book_card-rating">status : {el?.status}</p>
-                      <br />
-                      <Button
-                        onClick={() => deleteBook(el?.book?.id)}
-                        variant="outlined"
-                        color="error"
-                      >
-                        Remove
-                      </Button>
-                      <br />
-                      <br />
-                      <DialogSelect />
+            <div className="book_box">
+              {dataBook.length > 0 ? (
+                dataBook.map((el) => {
+                  return (
+                    <div className="book_card" key={el?.book?.id}>
+                      <img
+                        src={el?.book?.cover ? el?.book?.cover : img}
+                        alt="there is img"
+                      />
+                      <div className="book_card-right">
+                        <p className="book_card-title">{el?.book?.title}</p>
+                        <p
+                          className="book_card-author"
+                          style={{ width: "180px" }}
+                        >
+                          {el?.book?.author}, {el?.book?.published}
+                        </p>
+                        <p className="book_card-rating">
+                          status : {el?.status}
+                        </p>
+                        <br />
+                        <Button
+                          onClick={() => deleteBook(el?.book?.id)}
+                          variant="outlined"
+                          color="error"
+                        >
+                          Remove
+                        </Button>
+                        <br />
+                        <br />
+                        <DialogSelect id={el?.book.id} />
+                      </div>
                     </div>
-                  </div>
-                );
-              })
-            ) : (
-              <h1
-                style={{ color: "red", textAlign: "center", margin: "0 auto" }}
-              >
-                empty
-              </h1>
-            )}
+                  );
+                })
+              ) : (
+                <h1
+                  style={{
+                    color: "red",
+                    textAlign: "center",
+                    margin: "0 auto",
+                  }}
+                >
+                  empty
+                </h1>
+              )}
+            </div>
           </div>
         </div>
       </div>

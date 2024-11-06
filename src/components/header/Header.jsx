@@ -144,7 +144,10 @@ function DrawerAppBar(props) {
       .get(`https://no23.lavina.tech/books/${search}`, config)
       .then((res) => {
         setSearch(res);
-        console.log(res);
+        if (res?.data?.data.length == 0) {
+          setOpen(true);
+          setText("no such information found");
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -170,10 +173,7 @@ function DrawerAppBar(props) {
           <img src={shelf} alt="" />
           <p>My Shelf</p>
         </Link>
-        <Link to={"/edit"} className="aside_link">
-          <img src={dift} alt="" />
-          <p>Edit</p>
-        </Link>
+
         <Button
           style={{ marginLeft: "30px", width: "100px !important" }}
           onClick={handleLogOut}

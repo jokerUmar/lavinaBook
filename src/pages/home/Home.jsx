@@ -8,20 +8,17 @@ import LazyLoad from "react-lazy-load";
 import axios from "axios";
 import { MD5 } from "crypto-js";
 import { Button } from "@mui/material";
-import { AddingShelfContext } from "../../context/AddingShelfContext";
+import usePreventBackNavigation from "../../utils/disableRoute/DisableRoute";
 
 function Home() {
   let { key, secret } = JSON.parse(localStorage.getItem("user"));
-  let { bool, setBool } = useContext(BooleanContext);
+
+  usePreventBackNavigation();
+
   let { search, setSearch } = useContext(SearchContext);
-  let { adding, setAdding } = useContext(AddingShelfContext);
 
   const [loader, setLoader] = useState("LazyLoad");
   let navigate = useNavigate();
-
-  function handleCard() {
-    navigate("/book");
-  }
 
   function handleAdd(item) {
     // starting
@@ -60,7 +57,8 @@ function Home() {
         <div className="right">
           <DrawerAppBar />
           <div className="main">
-            {typeof search?.data?.data == "undefined" ? (
+            {typeof search?.data?.data == "undefined" ||
+            search?.data?.data.length == 0 ? (
               <h1
                 style={{
                   color: "#1976D2",

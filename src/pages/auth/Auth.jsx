@@ -18,9 +18,14 @@ import { Alert, Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { MD5 } from "crypto-js";
 import { AuthBoolContext } from "../../context/AuthBoolContext";
+import AuthCheck from "../../zustand/Authcheker";
+import usePreventBackNavigation from "../../utils/disableRoute/DisableRoute";
 
 export function AuthenticationForm(props) {
   let { authbool, setAuthbool } = useContext(AuthBoolContext);
+  let { check, changeTrue, changeFalse } = AuthCheck();
+
+  console.log(check);
 
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -47,14 +52,14 @@ export function AuthenticationForm(props) {
         localStorage.setItem("user", JSON.stringify(res?.data?.data));
 
         setTimeout(() => {
-          setAuthbool(true);
-          navigate("/home");
-        }, 700);
+          changeTrue();
+          navigate("/home", { replace: true });
+        }, 200);
       })
       .catch((err) => {
         if (err) {
           console.log(err);
-          setAuthbool(false);
+          changeFalse();
           setOpen(true);
           setText(err.message);
         }
@@ -116,7 +121,8 @@ export function AuthenticationForm(props) {
           form.values.key = "";
           form.values.secret = "";
           form.values.email = "";
-          setAuthbool(false);
+
+          changeFalse();
           setOpen(true);
           setText("this account already exists");
         }
@@ -151,21 +157,25 @@ export function AuthenticationForm(props) {
               data.secret === form.values.secret &&
               data.email === form.values.email
             ) {
-              setAuthbool(true);
+              // setAuthbool(true);
+              changeTrue();
               navigate("/home");
             } else {
-              setAuthbool(false);
+              // setAuthbool(false);
+              changeFalse();
               setOpen(true);
               setText("The login or password was entered incorrectly");
             }
           })
           .catch((err) => {
-            setAuthbool(false);
+            // setAuthbool(false);
+            changeFalse();
             setOpen(true);
             setText(err.message);
           });
       } else {
-        setAuthbool(false);
+        // setAuthbool(false);
+        changeFalse();
         setOpen(true);
         setText("this account is not exist");
       }
